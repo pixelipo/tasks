@@ -331,6 +331,9 @@
   list-style: none outside none;
   overflow: hidden;
   margin-top: -1px;
+  width: 32%;
+  float: left;
+  margin-right: 1%;
 }
 #content li.task-item .subtasks-container,
 #content div.task-item .subtasks-container {
