@@ -2,7 +2,8 @@
 <div ng-if="route.collectionID != 'week' && route.collectionID != 'starred' && route.collectionID != 'completed' && route.collectionID != 'all' && route.collectionID != 'today' && route.collectionID != 'current'">
     <div class="grouped-tasks"
          ng-class="{'completed-hidden':!settingsmodel.getById('various').showHidden}">
-        <ol class="tasks"
+      <?php for ($i=0; $i < 9; $i++) { ?>
+        <ol class="tasks priority<?php echo $i; ?>"
             calendarID="{{route.calendarID}}"
             collectionID="uncompleted"
             type="list"
@@ -11,7 +12,7 @@
             dnd-dragover="dragover(event, index)">
             <li class="task-item ui-draggable handler"
                 taskID="{{ task.uri }}"
-                ng-repeat="task in filtered = filteredTasks() | filter:hasNoParent(task) | filter:filterTasks(task.priority : 1) | filter:filterTasks(task,route.calendarID) | filter:{'completed':'false'} | orderBy:getSortOrder():settingsmodel.getById('various').sortDirection"
+                ng-repeat="task in filtered = filteredTasks() | filter:hasNoParent(task) | filter:(task.priority : 1) | filter:filterTasks(task,route.calendarID) | filter:{'completed':'false'} | orderBy:getSortOrder():settingsmodel.getById('various').sortDirection"
                 ng-click="openDetails(task.uri,$event)"
                 ng-class="{done: task.completed}"
                 dnd-draggable="task"
@@ -21,6 +22,7 @@
                 <?php print_unescaped($this->inc('part.taskbody')); ?>
             </li>
         </ol>
+        <?php } ?>
         <h2 class="heading-hiddentasks icon-triangle-s handler" ng-show="getCount(route.calendarID,'completed')" ng-click="toggleHidden()">
             {{ getCountString(route.calendarID,'completed') }}
         </h2>
